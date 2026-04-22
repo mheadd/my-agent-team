@@ -15,7 +15,7 @@ The chain includes human checkpoints for spec clarification and architectural de
 
 The Orchestrator uses VS Code's [subagent pattern](https://code.visualstudio.com/docs/copilot/agents/subagents) to invoke the Builder, Reviewer, and Shipper automatically — no manual switching required. Only the Orchestrator appears in the agent picker; the other agents run as subagents within the Orchestrator's session.
 
-### Start the chain
+### VS Code
 
 Select **Orchestrator** from the agent picker and give it a spec:
 
@@ -33,12 +33,29 @@ You can also point it at an issue or inline requirements:
 Implement the requirements in issue #42
 ```
 
+### Copilot CLI
+
+You can also run the Orchestrator from the [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli). In interactive mode, type `/agent` to see available agents:
+
+![Selecting a custom agent in the Copilot CLI](select-orchestrator.png)
+
+Select **Orchestrator** from the list. The CLI confirms the active agent and you can enter your prompt:
+
+![The Orchestrator agent selected and active in the Copilot CLI](agent-picker-cli.png)
+
+You can also invoke it directly from the command line:
+
+```
+copilot --agent orchestrator --prompt "Implement the spec in docs/specs/user-registration.md"
+```
+
 ### Human checkpoints
 
-The chain pauses for your input at two points:
+The chain pauses for your input at three points:
 
 1. **Spec ambiguity** — before work begins, if the Orchestrator finds requirement-level gaps.
-2. **ADR confirmation** — before the Shipper runs, if a major architectural decision was made.
+2. **Branch confirmation** — before the Builder starts, verifying the active branch is correct.
+3. **ADR confirmation** — before the Shipper runs, if a major architectural decision was made.
 
 ### If the build loop fails
 
