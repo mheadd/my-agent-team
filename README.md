@@ -19,6 +19,8 @@ The Orchestrator uses VS Code's [subagent pattern](https://code.visualstudio.com
 
 Select **Orchestrator** from the agent picker and give it a spec:
 
+![Selecting the Orchestrator from the VS Code agent picker](agent-picker.png)
+
 ```
 Implement the spec in docs/specs/user-registration.md
 ```
