@@ -2,6 +2,18 @@
 
 A four-agent chain that takes a software specification from planning to pull request. An **Orchestrator** governs the workflow, a **Builder** writes the code, a **Reviewer** evaluates it, and a **Shipper** prepares the PR.
 
+## Setup
+
+Copy the contents of this repository into your own project, placing files in the matching directory structure:
+
+- `.github/agents/` — Agent definitions (orchestrator, builder, reviewer, shipper)
+- `.github/instructions/` — Instruction files referenced by agents
+- `.github/skills/` — Skill definitions for specialized tasks (ADR writing, changelog updates, PR writing)
+- `docs/adr/` — Directory for Architecture Decision Records
+- `AGENTS.md` — Top-level conventions shared across all agents
+
+The agent and skill files use relative references, so the directory structure must be preserved.
+
 ## How It Works
 
 1. Start with the **Orchestrator** — it reviews the spec for ambiguity, declares scope, and drives the process.
@@ -37,17 +49,19 @@ Implement the requirements in issue #42
 
 You can also run the Orchestrator from the [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli). In interactive mode, type `/agent` to see available agents:
 
-![Selecting a custom agent in the Copilot CLI](select-orchestrator.png)
+![Selecting a custom agent in the Copilot CLI](agent-picker-cli.png)
 
 Select **Orchestrator** from the list. The CLI confirms the active agent and you can enter your prompt:
 
-![The Orchestrator agent selected and active in the Copilot CLI](agent-picker-cli.png)
+![The Orchestrator agent selected and active in the Copilot CLI](select-orchestrator.png)
 
 You can also invoke it directly from the command line:
 
 ```
 copilot --agent orchestrator --prompt "Implement the spec in docs/specs/user-registration.md"
 ```
+
+> **⚠️ Experimental:** The subagent pattern used by the Orchestrator (the `agents` frontmatter field) is not yet fully supported in the Copilot CLI. The CLI will load the Orchestrator as a custom agent, but may report warnings about unknown fields. The agents will still run, but this integration should be considered experimental.
 
 ### Human checkpoints
 
