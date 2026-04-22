@@ -14,6 +14,8 @@ Copy the contents of this repository into your own project, placing files in the
 
 The agent and skill files use relative references, so the directory structure must be preserved.
 
+This repo comes with agent definitions in `.github/agents/` - you can supplement the behavior of the agents by adding relevant instructions and skills files in `.github/instructions/` and `.github/skills/` respectively.
+
 ## How It Works
 
 1. Start with the **Orchestrator** — it reviews the spec for ambiguity, declares scope, and drives the process.
