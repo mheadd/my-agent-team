@@ -10,7 +10,7 @@ Work moves through four agents in sequence. The Orchestrator runs the other thre
 
 | Agent | Role |
 |:---|:---|
-| **Orchestrator** | Governs the chain. Reviews specs for ambiguity, declares scope, manages the build loop, confirms ADRs, and runs all other agents as subagents. |
+| **Orchestrator** | Governs the chain. Reviews specs for ambiguity, declares scope, verifies a feature branch is active, manages the build loop, confirms ADRs, and runs all other agents as subagents. |
 | **Builder** | Implements the spec. Writes code in discrete chunks, commits regularly. *(subagent only)* |
 | **Reviewer** | Evaluates builder output against defined principles. Returns a structured PASS or FAIL. Does not rewrite code. *(subagent only)* |
 | **Shipper** | Prepares the PR, updates the changelog, and codifies ADRs when instructed. Does not merge. *(subagent only)* |
@@ -42,6 +42,7 @@ These apply to all agents and all code in this repository.
 
 **Human checkpoints**
 - The chain pauses for human input on spec ambiguity before work begins
+- The chain verifies a feature branch is active and pauses for human confirmation before the builder starts
 - The chain escalates to a human after two consecutive reviewer failures
 - ADRs are confirmed by a human before being written
 
