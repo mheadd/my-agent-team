@@ -1,6 +1,7 @@
 ---
 name: Builder
 description: Reads a software specification, requirements, or instructions and generates code following defined engineering principles. Invoke after planning is complete.
+user-invocable: false
 tools: ["read", "edit", "search", "terminal"]
 ---
 

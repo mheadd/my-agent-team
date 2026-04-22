@@ -6,16 +6,16 @@ This repository uses a four-agent chain to take a software specification from pl
 
 ## The Agent Chain
 
-Work moves through four agents in sequence, governed by the orchestrator:
+Work moves through four agents in sequence. The Orchestrator runs the other three as [subagents](https://code.visualstudio.com/docs/copilot/agents/subagents) — they execute in isolated context within the Orchestrator's session and are not directly selectable from the agent picker.
 
 | Agent | Role |
 |:---|:---|
-| **Orchestrator** | Governs the chain. Reviews specs for ambiguity, declares scope, manages the build loop, confirms ADRs, and hands off to the shipper. |
-| **Builder** | Implements the spec. Writes code in discrete chunks, commits regularly. |
-| **Reviewer** | Evaluates builder output against defined principles. Returns a structured PASS or FAIL. Does not rewrite code. |
-| **Shipper** | Prepares the PR, updates the changelog, and codifies ADRs when instructed. Does not merge. |
+| **Orchestrator** | Governs the chain. Reviews specs for ambiguity, declares scope, manages the build loop, confirms ADRs, and runs all other agents as subagents. |
+| **Builder** | Implements the spec. Writes code in discrete chunks, commits regularly. *(subagent only)* |
+| **Reviewer** | Evaluates builder output against defined principles. Returns a structured PASS or FAIL. Does not rewrite code. *(subagent only)* |
+| **Shipper** | Prepares the PR, updates the changelog, and codifies ADRs when instructed. Does not merge. *(subagent only)* |
 
-**Always start with the Orchestrator.** Do not invoke the builder, reviewer, or shipper directly. The orchestrator owns sequencing and context passing.
+**Always start with the Orchestrator.** The builder, reviewer, and shipper are not user-invocable — they run only as subagents of the orchestrator.
 
 ---
 

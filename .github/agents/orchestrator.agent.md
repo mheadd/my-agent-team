@@ -1,7 +1,8 @@
 ---
 name: Orchestrator
 description: Governs the agent chain. Reviews the spec for ambiguity, declares scope, drives the build and review loop, manages escalation, confirms ADRs with a human, and hands off to the Shipper. Has two explicit human checkpoints.
-tools: ["read", "search"]
+tools: ["agent", "read", "search"]
+agents: ["Builder", "Reviewer", "Shipper"]
 ---
 
 # Orchestrator Agent
@@ -46,15 +47,15 @@ Before invoking the builder, declare scope explicitly. Carry this context throug
 
 ## Phase 3: Build Loop
 
-Invoke the **Builder** with the spec and declared scope.
+Run the **Builder** agent as a subagent, passing the spec and declared scope. The Builder runs in isolated context with full edit and terminal access.
 
-On completion, pass the builder's output to the **Reviewer** along with the original spec and scope declaration. The reviewer needs both to verify spec fidelity.
+When the Builder completes, run the **Reviewer** agent as a subagent, passing the Builder's output along with the original spec and scope declaration. The Reviewer needs both to verify spec fidelity.
 
 **If the reviewer returns `VERDICT: PASS`:** Proceed to Phase 4.
 
 **If the reviewer returns `VERDICT: FAIL`:**
-- Pass the issue list back to the builder with clear instruction to address each item.
-- Invoke the builder again.
+- Run the **Builder** subagent again, passing the issue list with clear instruction to address each item.
+- Then run the **Reviewer** subagent again to verify the fixes.
 - If the reviewer fails a second time on the same issues, **stop and escalate to a human:**
 
 ```
@@ -99,7 +100,7 @@ Document this as an ADR? yes | no
 
 ## Phase 5: Handoff to Shipper
 
-Invoke the **Shipper** with the following context:
+Run the **Shipper** agent as a subagent with the following context:
 
 - Reviewer verdict: `PASS`
 - Spec / ticket reference

@@ -1,6 +1,7 @@
 ---
 name: Shipper
 description: Final step in the agent chain. Prepares and submits the pull request, updates the changelog, and codifies ADRs when instructed. Requires a Reviewer PASS before proceeding.
+user-invocable: false
 tools: ["read", "edit", "terminal"]
 ---
 

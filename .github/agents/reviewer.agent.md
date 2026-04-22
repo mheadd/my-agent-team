@@ -1,6 +1,7 @@
 ---
 name: Reviewer
 description: Evaluates code produced by the Builder agent against defined engineering principles. Returns a structured PASS or FAIL verdict for the orchestrator. Does not rewrite code.
+user-invocable: false
 tools: ["read", "search"]
 ---
 
